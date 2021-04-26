@@ -1,0 +1,7 @@
+pip==21.0.1
+pytest
+easydict
+wandb
+pytest
+pytest-cov
+coverage
