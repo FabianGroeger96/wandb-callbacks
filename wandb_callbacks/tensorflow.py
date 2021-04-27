@@ -1,19 +1,21 @@
-import wandb
-import numpy as np
-import tensorflow as tf
+import cv2
 import matplotlib.pyplot as plt
-
-from tensorflow import keras
+import numpy as np
+import wandb
 from tensorflow.keras import backend as K
+
+import tensorflow as tf
+from tensorflow import keras
+from wandb_callbacks.utils import GradCAM
 
 
 class ActivationCallback(tf.keras.callbacks.Callback):
 
     def __init__(self, validation_data, layer_name):
-        '''
+        """
         validation_data: tuple of form (sample_images, sample_labels).
         layer_name: string of the layer of whose features we are interested in.
-        '''
+        """
         super(ActivationCallback, self).__init__()
         self.validation_data = validation_data
         self.layer_name = layer_name
@@ -36,15 +38,18 @@ class ActivationCallback(tf.keras.callbacks.Callback):
             n_features = features.shape[0]
             # get all divisors of the n. of features
             divisors = self.__get_divisors(n_features)
-            # -2, because the largest is equal to the number
-            biggest_div = divisors[-2]
+            # middle element of the divisors are n. of columns
+            ncols = divisors[int(len(divisors) / 2)]
+            nrows = int(n_features / ncols)
             fig, axs = plt.subplots(
-                nrows=int(n_features/biggest_div),
-                ncols=biggest_div,
+                nrows=nrows,
+                ncols=ncols,
                 figsize=(15, 8))
+
+            # plot the figures
             c = 0
-            for i in range(int(n_features/biggest_div)):
-                for j in range(biggest_div):
+            for i in range(nrows):
+                for j in range(ncols):
                     axs[i][j].imshow(features[c], cmap='gray')
                     axs[i][j].set_xticks([])
                     axs[i][j].set_yticks([])
@@ -63,7 +68,7 @@ class ActivationCallback(tf.keras.callbacks.Callback):
         return divisors
 
 
-class DeadReluDetector(tf.keras.callbacks.Callback):
+class DeadReluCallback(tf.keras.callbacks.Callback):
     """
     Reports the number of dead ReLUs after each training epoch
     ReLU is considered to be dead if it did not fire once for entire training set
@@ -77,7 +82,7 @@ class DeadReluDetector(tf.keras.callbacks.Callback):
     """
 
     def __init__(self, x_train, verbose=False):
-        super(DeadReluDetector, self).__init__()
+        super(DeadReluCallback, self).__init__()
 
         self.x_train = x_train
         self.verbose = verbose
@@ -170,7 +175,47 @@ class DeadReluDetector(tf.keras.callbacks.Callback):
                 print(str_warning)
 
             # log to wandb
+            percentage_dead_neurons = round(dead_neurons_share * 100, 2)
             wandb.log(
-                {'n. of dead relus': dead_neurons,
-                 'percentage dead relus': round(
-                     dead_neurons_share * 100, 2)})
+                {'n. of dead relus/Layer {} (#{})'.format(layer_name, layer_index): dead_neurons,
+                 'percentage dead relus/Layer {} (#{})'.format(layer_name, layer_index): percentage_dead_neurons})
+
+
+class GRADCamCallback(tf.keras.callbacks.Callback):
+
+    def __init__(self, validation_data, layer_name):
+        super(GRADCamCallback, self).__init__()
+
+        self.validation_data = validation_data
+        self.layer_name = layer_name
+
+    def on_epoch_end(self, logs, epoch):
+        images = []
+        grad_cam = []
+
+        # Initialize GRADCam Class
+        cam = GradCAM(self.model, self.layer_name)
+
+        for image in self.validation_data:
+            image = np.expand_dims(image, 0)
+            pred = self.model.predict(image)
+            classIDx = np.argmax(pred[0])
+
+            # Compute Heatmap
+            heatmap = cam.compute_heatmap(image, classIDx)
+
+            image = image.reshape(image.shape[1:])
+            image = image * 255
+            image = image.astype(np.uint8)
+
+            # Overlay heatmap on original image
+            heatmap = cv2.resize(heatmap, (image.shape[0], image.shape[1]))
+            (heatmap, output) = cam.overlay_heatmap(heatmap, image, alpha=0.5)
+
+            images.append(image)
+            grad_cam.append(output)
+
+        wandb.log({"images": [wandb.Image(image)
+                              for image in images]})
+        wandb.log({"gradcam": [wandb.Image(cam)
+                               for cam in grad_cam]})

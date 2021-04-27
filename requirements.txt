@@ -5,3 +5,4 @@ wandb
 pytest
 pytest-cov
 coverage
+opencv-python
