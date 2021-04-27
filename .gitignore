@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/vim,linux,python,jupyternotebooks,macos,pycharm+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=vim,linux,python,jupyternotebooks,macos,pycharm+all
 
@@ -323,3 +322,4 @@ dist/
 *.egg-info/
 *.egg
 venv
+wandb/
