@@ -11,3 +11,6 @@ Callbacks currently implemented:
 * `GradCAMLogger`
   *  [Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization](https://arxiv.org/pdf/1610.02391.pdf)
   *  produces a coarse localization map highlighting the important regions in the image for predicting the class of the image
+
+## Sample Implementation
+Can be found in `notebooks/sample_implementation.ipynb`.
