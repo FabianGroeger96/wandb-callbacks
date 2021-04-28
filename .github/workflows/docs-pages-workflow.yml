@@ -12,15 +12,10 @@ jobs:
     container: debian:buster-slim
  
     steps:
- 
-    - name: Prereqs
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        apt-get update
-        apt-get install -y git
-        git clone --depth 1 "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
-      shell: bash
+    - uses: actions/checkout@v2
+    - uses: Dovyski/setup-opencv-action@v1
+        with:
+          opencv-version: '4.0.0'
  
     - name: Execute script to build our documentation and update pages
       env:
