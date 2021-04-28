@@ -114,7 +114,7 @@ cat > index.html <<EOF
 <!DOCTYPE html>
 <html>
    <head>
-      <title>helloWorld Docs</title>
+      <title>wandb-callbacks Docs</title>
       <meta http-equiv = "refresh" content="0; url='/${REPO_NAME}/en/master/'" />
    </head>
    <body>
@@ -132,9 +132,6 @@ Nothing to see here. The contents of this branch are essentially a cache that's 
  
 If you're looking to update our documentation, check the relevant development branch's 'docs/' dir.
  
-For more information on how this documentation is built using Sphinx, Read the Docs, and GitHub Actions/Pages, see:
- 
- * https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
 EOF
  
 # copy the resulting html pages built from sphinx above to our new git repo
