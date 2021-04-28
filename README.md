@@ -1,4 +1,4 @@
-[![pYPI version](https://badge.fury.io/py/wandb-callbacks.svg)](https://badge.fury.io/py/wandb-callbacks)
+[![PyPI version](https://badge.fury.io/py/wandb-callbacks.svg)](https://badge.fury.io/py/wandb-callbacks)
 
 # Weights &amp; Biases Callbacks
 `wandb-callbacks` provides some additional Callbacks for Weights &amp; Biases.

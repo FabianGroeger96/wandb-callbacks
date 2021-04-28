@@ -42,7 +42,7 @@ class ActivationCallback(tf.keras.callbacks.Callback):
         # check if the callback should log or not
         if (epoch % self.log_frequency) != 0:
             return
-
+          
         # Build intermediate layer with the target layer
         self.intermediate_model = keras.models.Model(
             inputs=self.model.input,
