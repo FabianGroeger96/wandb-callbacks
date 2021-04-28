@@ -5,6 +5,14 @@ import tensorflow as tf
 
 
 def get_samples_for_activation(class_names, X_val, Y_val):
+    """get_samples_for_activation.
+    Returns sample images from the given data.
+    Sample images contain one image per class in the dataset.
+
+    :param class_names: class names of the dataset.
+    :param X_val: features of the dataset.
+    :param Y_val: labels of the dataset.
+    """
     sample_images, sample_labels, sample_labels_enc = [], [], []
 
     indices = [0] * len(class_names)
