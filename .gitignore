@@ -323,3 +323,6 @@ dist/
 *.egg
 venv
 wandb/
+/_build
+/doctrees
+

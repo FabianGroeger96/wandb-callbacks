@@ -1,8 +1,6 @@
+matplotlib==3.3.2
+wandb==0.10.27
+opencv_python==4.5.1.48
+numpy==1.19.4
+tensorflow>=2.1.0
 pip==21.0.1
-pytest
-easydict
-wandb
-pytest
-pytest-cov
-coverage
-opencv-python
