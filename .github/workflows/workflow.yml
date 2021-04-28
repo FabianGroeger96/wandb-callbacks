@@ -19,6 +19,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install scikit-image opencv-python
           python -m pip install rinohtype pygments
+          python -m pip install wandb
           python -m pip install .
           python -c "import cv2; print('OpenCV '+ cv2.__version__)"
       - name: Install TF
