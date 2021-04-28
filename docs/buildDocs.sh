@@ -21,6 +21,7 @@ apt-get -y install git rsync python3-sphinx python3-sphinx-rtd-theme python3-ste
  
 python3 -m pip install --upgrade rinohtype pygments
 python3 -m pip install -r requirements.txt
+python3 -m pip install --upgrade opencv-python-headless
  
 #####################
 # DECLARE VARIABLES #
