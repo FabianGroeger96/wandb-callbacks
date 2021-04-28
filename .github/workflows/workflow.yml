@@ -25,6 +25,9 @@ jobs:
         run: |
           python -m pip install tensorflow
           python -c "import tensorflow as tf; print('TF ' + tf.__version__)"
+      - name: Install doc dependencies
+        run: |
+          pip install flake8 pytest pytest-cov sphinx sphinx_rtd_theme
       - name: Build documentation and update pages
         env: 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
