@@ -16,8 +16,8 @@ set -x
 # INSTALL DEPENDS #
 ###################
  
-apt-get update
-apt-get -y install git rsync python3-sphinx python3-sphinx-rtd-theme python3-stemmer python3-git python3-pip python3-virtualenv python3-setuptools
+sudo apt-get update
+sudo apt-get -y install git rsync python3-sphinx python3-sphinx-rtd-theme python3-stemmer python3-git python3-pip python3-virtualenv python3-setuptools
  
 python3 -m pip install --upgrade rinohtype pygments
  
@@ -88,8 +88,8 @@ for current_version in ${versions}; do
  
 done
  
-# return to master branch
-git checkout master
+# return to main branch
+git checkout main
  
 #######################
 # Update GitHub Pages #
@@ -114,11 +114,11 @@ cat > index.html <<EOF
 <!DOCTYPE html>
 <html>
    <head>
-      <title>helloWorld Docs</title>
-      <meta http-equiv = "refresh" content="0; url='/${REPO_NAME}/en/master/'" />
+      <title>wandb-callbacks Docs</title>
+      <meta http-equiv = "refresh" content="0; url='/${REPO_NAME}/en/main/'" />
    </head>
    <body>
-      <p>Please wait while you're redirected to our <a href="/${REPO_NAME}/en/master/">documentation</a>.</p>
+      <p>Please wait while you're redirected to our <a href="/${REPO_NAME}/en/main/">documentation</a>.</p>
    </body>
 </html>
 EOF
@@ -132,9 +132,6 @@ Nothing to see here. The contents of this branch are essentially a cache that's 
  
 If you're looking to update our documentation, check the relevant development branch's 'docs/' dir.
  
-For more information on how this documentation is built using Sphinx, Read the Docs, and GitHub Actions/Pages, see:
- 
- * https://tech.michaelaltfield.net/2020/07/18/sphinx-rtd-github-pages-1
 EOF
  
 # copy the resulting html pages built from sphinx above to our new git repo
