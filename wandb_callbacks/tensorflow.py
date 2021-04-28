@@ -42,7 +42,7 @@ class ActivationCallback(tf.keras.callbacks.Callback):
         # check if the callback should log or not
         if (epoch % self.log_frequency) != 0:
             return
-          
+
         # Build intermediate layer with the target layer
         self.intermediate_model = keras.models.Model(
             inputs=self.model.input,
@@ -193,6 +193,10 @@ class DeadReluCallback(tf.keras.callbacks.Callback):
         if (epoch % self.log_frequency) != 0:
             return
 
+        # lists to compute final average over all layers
+        l_dead_neurons = []
+        l_percentage_dead = []
+
         # loop over all relu activations
         for relu_activation in self.get_relu_activations():
             layer_index, activation_values, layer_name, layer_weight_shape = relu_activation
@@ -236,10 +240,18 @@ class DeadReluCallback(tf.keras.callbacks.Callback):
 
             # log to wandb
             percentage_dead_neurons = round(dead_neurons_share * 100, 2)
-            wandb.log({'n. of dead relus/Layer {} (#{})'.format(layer_name,
-                                                                layer_index): dead_neurons,
-                       'percentage dead relus/Layer {} (#{})'.format(layer_name,
-                                                                     layer_index): percentage_dead_neurons})
+            wandb.log({'n. of dead relus/Layer {} (#{})'.format(layer_name, layer_index): dead_neurons,
+                       'percentage dead relus/Layer {} (#{})'.format(layer_name, layer_index): percentage_dead_neurons})
+
+            # append to overall list
+            l_dead_neurons.append(dead_neurons)
+            l_percentage_dead.append(percentage_dead_neurons)
+
+        # log summary of all layers
+        l_dead_neurons = np.asarray(l_dead_neurons)
+        l_percentage_dead = np.asarray(l_percentage_dead)
+        wandb.log({'n. of dead relus/overall mean': l_dead_neurons.mean(),
+                    'percentage dead relus/overall mean': l_percentage_dead.mean()})
 
 
 class GRADCamCallback(tf.keras.callbacks.Callback):
