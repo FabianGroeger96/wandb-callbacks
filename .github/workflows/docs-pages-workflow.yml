@@ -12,8 +12,6 @@ jobs:
  
     steps:
     - uses: actions/checkout@v2
-    - name: Install sudo package
-      run: apt update && apt install sudo
     - name: Cache OpenCV
       id: opencv-cache
       uses: actions/cache@v2
