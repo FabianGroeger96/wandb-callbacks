@@ -106,7 +106,7 @@ class DeadReluCallback(tf.keras.callbacks.Callback):
     def __init__(self,
                  x_train,
                  log_frequency=1,
-                 dead_threshold=0.1,
+                 dead_threshold=0.8,
                  verbose=False):
         """__init__.
         Initializes the DeadReluCallback.
@@ -315,6 +315,7 @@ class GRADCamCallback(tf.keras.callbacks.Callback):
 
             images.append(image)
             grad_cam.append(output)
+            grad_cam.append(heatmap)
 
         wandb.log({"images": [wandb.Image(image)
                               for image in images]})
