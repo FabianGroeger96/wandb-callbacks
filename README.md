@@ -23,5 +23,20 @@ Callbacks currently implemented:
   *  [Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization](https://arxiv.org/pdf/1610.02391.pdf)
   *  produces a coarse localization map highlighting the important regions in the image for predicting the class of the image
 
+## Installation
+
+### Last Stable Release
+```python
+pip install wandb-callbacks
+```
+
+### Latest Development Changes
+```bash
+git clone https://github.com/FabianGroeger96/wandb-callbacks
+```
+
 ## Sample Implementation
 Can be found in `notebooks/sample_implementation.ipynb`.
+
+## Contributing
+Open to ideas and for helpers to develop the package further.
