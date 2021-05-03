@@ -1,4 +1,13 @@
+<p align="center"><img width=40% src="http://fabiangroeger.com/wp-content/uploads/2021/05/wandb-callbacks-logo.png"></p>
+
+<h2 align="center">
+ 
 [![PyPI version](https://badge.fury.io/py/wandb-callbacks.svg)](https://badge.fury.io/py/wandb-callbacks)
+[![GitHub Issues](https://img.shields.io/github/issues/FabianGroeger96/wandb-callbacks)](https://img.shields.io/github/issues/FabianGroeger96/wandb-callbacks)
+[![License](https://img.shields.io/github/license/FabianGroeger96/wandb-callbacks)](https://img.shields.io/github/license/FabianGroeger96/wandb-callbacks)
+![Contribotion](https://img.shields.io/badge/Contribution-Welcome-brightgreen)
+
+</h2>
 
 # Weights &amp; Biases Callbacks
 `wandb-callbacks` provides some additional Callbacks for Weights &amp; Biases.
